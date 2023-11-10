@@ -60,7 +60,7 @@ public class NewGa {
     public double[] crossover(double[] fittest, double[] secondFittest) {
 
         Random random = new Random();
-        double[] child = new double[3];
+        double[] child = new double[dimensions];
 
         // Randomly select the crossover point
         int crossoverPoint = random.nextInt(fittest.length);
@@ -149,19 +149,14 @@ public class NewGa {
                     int parent1 = ga.getFittestIndividual();
                     int parent2 = ga.getSecondFittest();
 
-                    newPopulation[i] = ga.crossover(population[parent1], population[parent2]);
+                    //crossover
+                    double[] child = ga.crossover(population[parent1], population[parent2]);
 
-                    for (int j = 0; j < ga.popSize; j++) {
-                        for (int z = 0; z < 3; z++) {
-                            System.out.println(newPopulation[j][z]);
-                        }
-
-                    }
-
-                    newPopulation[i] = ga.mutation(newPopulation[i]);
+                    //mutation
+                    newPopulation[i] = ga.mutation(child);
 
                 }
-
+                // Replace the least fittest individual with the most fittest individual in the new population
                 ga.replaceLeastFittestWithMostFittest();
 
                 // Replace the old population with the new one
